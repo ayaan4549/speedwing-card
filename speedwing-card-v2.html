@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tuwan Farzan Mahamoor | Speedwing Freighters</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:  #1B2A6B;
+      --gold:  #C5992A;
+      --gold-light: #D4AA45;
+      --white: #FFFFFF;
+      --off:   #F7F6F2;
+      --gray:  #888;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(197,153,42,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(197,153,42,0.08) 0%, transparent 50%);
+      font-family: 'Inter', sans-serif;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(197,153,42,0.3);
+      animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Header band ── */
+    .card-header {
+      background: var(--navy);
+      padding: 32px 28px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    /* Subtle ship-wake arcs */
+    .card-header::before {
+      content: '';
+      position: absolute;
+      right: -40px; top: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      border: 1px solid rgba(197,153,42,0.15);
+      pointer-events: none;
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .logo-mark {
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      color: var(--gold);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    .person-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .person-title {
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* ── Body ── */
+    .card-body {
+      padding: 24px 28px 28px;
+      background: var(--white);
+    }
+
+    .contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid #F0EEE8;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+
+    .contact-item:last-child { border-bottom: none; }
+
+    .contact-item:hover .ci-label { color: var(--navy); }
+    .contact-item:hover .icon-wrap { background: var(--navy); }
+    .contact-item:hover .icon-wrap svg { color: var(--gold); }
+
+    .icon-wrap {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--off);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .icon-wrap svg {
+      width: 16px;
+      height: 16px;
+      color: var(--navy);
+      transition: color 0.2s;
+    }
+
+    .ci-content { flex: 1; min-width: 0; }
+
+    .ci-type {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+      font-weight: 500;
+      margin-bottom: 1px;
+    }
+
+    .ci-label {
+      font-size: 13.5px;
+      color: #222;
+      font-weight: 400;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: color 0.2s;
+    }
+
+    .ci-arrow {
+      color: #CCC;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    /* ── Save button ── */
+    .save-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .save-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(197,153,42,0.2) 0%, transparent 60%);
+    }
+
+    .save-btn:hover { background: #24368a; }
+    .save-btn:active { transform: scale(0.98); }
+
+    .save-btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+
+    /* ── Footer ── */
+    .card-footer {
+      background: var(--off);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .reg-text {
+      font-size: 10px;
+      color: #AAA;
+      letter-spacing: 0.05em;
+    }
+
+    .reg-dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Header -->
+  <div class="card-header">
+    <div class="logo-row">
+      <!-- SVG ship/wing mark approximating the brand shape -->
+      <svg class="logo-mark" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#D4AA45"/>
+            <stop offset="100%" stop-color="#8B6214"/>
+          </linearGradient>
+        </defs>
+        <!-- Wing / freighter silhouette -->
+        <path d="M6 32 Q14 14 34 10 L46 14 Q38 16 30 22 L42 20 Q36 26 24 30 L38 30 Q28 36 14 38 Z" fill="url(#g1)" opacity="0.95"/>
+        <path d="M6 36 Q18 32 30 34 L14 42 Z" fill="url(#g1)" opacity="0.7"/>
+        <path d="M30 22 Q38 18 46 14 Q44 20 36 24 Z" fill="#fff" opacity="0.15"/>
+      </svg>
+      <div>
+        <div class="brand-name">SPEEDWING FREIGHTERS</div>
+        <div class="brand-sub">Customs Clearing Services</div>
+      </div>
+    </div>
+
+    <div class="person-name">Tuwan Farzan Mahamoor</div>
+    <div class="person-title">Proprietor &amp; Custom House Agent</div>
+  </div>
+
+  <!-- Contacts -->
+  <div class="card-body">
+    <ul class="contact-list">
+
+      <li>
+        <a class="contact-item" href="tel:+94713387397">
+          <div class="icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
+          <div class="ci-content">
+            <div class="ci-type">Hotline</div>
+            <div class="ci-label">+94 713 387 397</div>
+          </div>
+          <span class="ci-arrow">›</span>
+        </a>
+      </li>
+
+      <li>
+        <a class="contact-item" href="tel:+94753226556">
+          <div class="icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+              <line x1="12" y1="18" x2="12.01" y2="18"/>
+            </svg>
+          </div>
+          <div class="ci-content">
+            <div class="ci-type">Mobile</div>
+            <div class="ci-label">+94 753 226 556</div>
+          </div>
+          <span class="ci-arrow">›</span>
+        </a>
+      </li>
+
+      <li>
+        <a class="contact-item" href="mailto:farzan@speedwingfreighters.com">
+          <div class="icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <div class="ci-content">
+            <div class="ci-type">Email</div>
+            <div class="ci-label">farzan@speedwingfreighters.com</div>
+          </div>
+          <span class="ci-arrow">›</span>
+        </a>
+      </li>
+
+      <li>
+        <a class="contact-item" href="https://www.speedwingfreighters.com" target="_blank" rel="noopener">
+          <div class="icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div class="ci-content">
+            <div class="ci-type">Website</div>
+            <div class="ci-label">www.speedwingfreighters.com</div>
+          </div>
+          <span class="ci-arrow">›</span>
+        </a>
+      </li>
+
+      <li>
+        <div class="contact-item" style="cursor:default;">
+          <div class="icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div class="ci-content">
+            <div class="ci-type">Address</div>
+            <div class="ci-label" style="white-space:normal;line-height:1.4;">No. 121/1/11, First Cross Street,<br>Colombo 11, Sri Lanka</div>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+
+    <!-- Save contact button generates a .vcf -->
+    <a class="save-btn" id="saveBtn" href="#" onclick="downloadVCard(event)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      Save to Contacts
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <div class="card-footer">
+    <span class="reg-text">Reg No: WP/COL/202600073</span>
+    <div class="reg-dot"></div>
+    <span class="reg-text">Colombo, Sri Lanka</span>
+  </div>
+
+</div>
+
+<script>
+function downloadVCard(e) {
+  e.preventDefault();
+  const vcard = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'FN:Tuwan Farzan Mahamoor',
+    'N:Mahamoor;Tuwan;Farzan;;',
+    'ORG:Speedwing Freighters',
+    'TITLE:Proprietor & Custom House Agent',
+    'TEL;TYPE=WORK,VOICE:+94713387397',
+    'TEL;TYPE=CELL,VOICE:+94753226556',
+    'EMAIL;TYPE=WORK:farzan@speedwingfreighters.com',
+    'URL:https://www.speedwingfreighters.com',
+    'ADR;TYPE=WORK:;;No. 121/1/11\\, First Cross Street;Colombo 11;;Sri Lanka',
+    'NOTE:Company Register No: WP/COL/202600073',
+    'END:VCARD'
+  ].join('\r\n');
+
+  const blob = new Blob([vcard], { type: 'text/vcard' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'tuwan-farzan-speedwing.vcf';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
